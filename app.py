@@ -14,10 +14,9 @@ def run_query(query, params=(), fetch=False):
     conn.close()
     return data
 
-st.set_page_config(page_title="Vehicle Rental System - KIIT", layout="wide")
+st.set_page_config(page_title="Vehicle Rental System", layout="wide")
 
-st.title("🚗 Vehicle Rental Management System")
-st.caption("Bike & Car Rentals for KIIT - Powered by SQLite & Streamlit")
+st.title("Vehicle Rental Management System")
 
 menu = ["View Vehicles", "Add Customer", "New Rental", "Return Vehicle", "Payments", "Reports"]
 choice = st.sidebar.radio("📌 Menu", menu)
@@ -59,7 +58,7 @@ elif choice == "New Rental":
         rent_days = (end - start).days + 1
         rent_amt = run_query("SELECT rent_per_day FROM Vehicles WHERE vehicle_id=?", (veh[0],), fetch=True)[0][0]
         total = rent_days * rent_amt
-        st.write(f"💰 Estimated Total = ₹{total}")
+        st.write(f"Estimated Total 💵 = ₹{total}")
         if st.button("Confirm Booking"):
             run_query("INSERT INTO Rentals (customer_id, vehicle_id, start_date, end_date, total_amount) VALUES (?,?,?,?,?)",
                       (cust[0], veh[0], start, end, total))
